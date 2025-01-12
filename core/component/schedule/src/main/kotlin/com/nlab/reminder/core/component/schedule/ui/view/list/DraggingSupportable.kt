@@ -21,5 +21,6 @@ package com.nlab.reminder.core.component.schedule.ui.view.list
  */
 internal interface DraggingSupportable {
     fun isScaleOnDraggingNeeded(): Boolean
+    fun isDragEnabled(): Boolean
     fun onDragging(isActive: Boolean)
 }

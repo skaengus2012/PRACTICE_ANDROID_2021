@@ -24,5 +24,6 @@ import android.view.View
 internal interface SwipeSupportable {
     val swipeView: View
     val clampWidth: Float
+    fun isSwipeEnabled(): Boolean
     fun onSwipe(isActive: Boolean, dx: Float)
 }

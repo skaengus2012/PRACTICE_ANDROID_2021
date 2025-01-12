@@ -27,6 +27,8 @@ import com.nlab.reminder.core.component.schedule.R
 import kotlin.math.*
 
 private const val DEFAULT_ANIMATE_DURATION = 100L
+private const val DRAG_DIR = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+private const val SWIPE_DIR = ItemTouchHelper.START or ItemTouchHelper.END
 
 /**
  * Implementation of Drag-n-drop, swipe policy for [ScheduleAdapterItem].
@@ -40,8 +42,8 @@ class ScheduleListItemTouchCallback(
     private val draggedWhenScaleViewHeight: Float,
     private val itemMoveListener: ItemMoveListener
 ) : ItemTouchHelper.SimpleCallback(
-    /* dragDirs=*/ ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-    /* swipeDirs=*/ ItemTouchHelper.START or ItemTouchHelper.END
+    /* dragDirs=*/ DRAG_DIR,
+    /* swipeDirs=*/ SWIPE_DIR
 ) {
     private val disposeSwipeClearedAnimators = mutableSetOf<ViewPropertyAnimator>()
     private var disposeDragScaleAnimator: ViewPropertyAnimator? = null
@@ -88,11 +90,13 @@ class ScheduleListItemTouchCallback(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder
     ): Int {
-        val flag = true // TODO implement upgrade
-        return if (flag) super.getMovementFlags(recyclerView, viewHolder)
-        else ItemTouchHelper.ACTION_STATE_IDLE
+        return makeMovementFlags(
+            /* dragFlags=*/ if (viewHolder is DraggingSupportable && viewHolder.isDragEnabled()) DRAG_DIR
+            else 0,
+            /* swipeFlags=*/ if (viewHolder is SwipeSupportable && viewHolder.isSwipeEnabled()) SWIPE_DIR
+            else 0
+        )
     }
-
 
     override fun getDragDirs(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int =
         if (viewHolder is DraggingSupportable) super.getDragDirs(recyclerView, viewHolder)

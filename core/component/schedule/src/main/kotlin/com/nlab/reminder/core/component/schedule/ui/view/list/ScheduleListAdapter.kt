@@ -51,7 +51,8 @@ class ScheduleListAdapter(
     override fun getItemViewType(position: Int): Int = when (getItem(position)) {
         is ScheduleAdapterItem.Headline -> ITEM_VIEW_TYPE_HEADLINE
         is ScheduleAdapterItem.HeadlinePadding -> ITEM_VIEW_TYPE_HEADLINE_PADDING
-        is ScheduleAdapterItem.Content -> ITEM_VIEW_TYPE_CONTENT
+        is ScheduleAdapterItem.Content,
+        is ScheduleAdapterItem.Test -> ITEM_VIEW_TYPE_CONTENT
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleAdapterItemViewHolder {
@@ -103,7 +104,13 @@ class ScheduleListAdapter(
 
         when (holder) {
             is ScheduleHeadlineViewHolder -> holder.bind(item as ScheduleAdapterItem.Headline)
-            is ScheduleContentViewHolder -> holder.bind(item as ScheduleAdapterItem.Content)
+            is ScheduleContentViewHolder -> {
+                when (item) {
+                    is ScheduleAdapterItem.Content -> holder.bindContent(item)
+                    is ScheduleAdapterItem.Test -> holder.bindTest(item)
+                    else -> throw IllegalArgumentException("Unknown item type: $item")
+                }
+            }
             is ScheduleHeadlinePaddingViewHolder -> Unit
         }
     }

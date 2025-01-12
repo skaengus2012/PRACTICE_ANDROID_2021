@@ -195,9 +195,20 @@ internal class ScheduleContentViewHolder(
         binding.editableViews().forEach { v -> v.isEnabled = isActive.not() }
     }
 
-    fun bind(item: ScheduleAdapterItem.Content) {
+    override fun isSwipeEnabled(): Boolean {
+        return bindingId.value != null
+    }
+
+    override fun isDragEnabled(): Boolean {
+        return bindingId.value != null
+    }
+
+    fun bindContent(item: ScheduleAdapterItem.Content) {
         bindingId.value =
             item.scheduleDetail.schedule.id
+        binding.layoutClamp.setVisible(true)
+        binding.layoutContent.setVisible(true)
+        binding.layoutSticky.setVisible(false)
         binding.viewLine
             .setVisible(isVisible = item.isLineVisible, goneIfNotVisible = false)
         binding.edittextTitle
@@ -222,6 +233,13 @@ internal class ScheduleContentViewHolder(
                 error = linkThumbnailPlaceHolderDrawable
             )
         }
+    }
+
+    fun bindTest(item: ScheduleAdapterItem.Test) {
+        bindingId.value = null
+        binding.layoutClamp.setVisible(false)
+        binding.layoutContent.setVisible(false)
+        binding.layoutSticky.setVisible(true)
     }
 }
 

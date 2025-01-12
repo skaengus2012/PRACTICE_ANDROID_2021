@@ -312,4 +312,18 @@
 
     </RelativeLayout>
 
+    <FrameLayout
+        android:id="@+id/layout_sticky"
+        android:background="@color/red_400"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textview_hello"
+            android:text="Hello"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+    </FrameLayout>
+
 </FrameLayout>

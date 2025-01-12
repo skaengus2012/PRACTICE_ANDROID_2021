@@ -33,4 +33,6 @@ sealed class ScheduleAdapterItem private constructor() {
         val scheduleDetail: ScheduleDetail,
         val isLineVisible: Boolean
     ) : ScheduleAdapterItem()
+
+    data object Test : ScheduleAdapterItem()
 }
