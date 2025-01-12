@@ -112,14 +112,9 @@ class ScheduleListAdapter(
         selectionEnabled.value = isEnabled
     }
 
-    fun onItemMoved(fromViewHolder: RecyclerView.ViewHolder, toViewHolder: RecyclerView.ViewHolder): Boolean {
-        // TODO needs to be upgraded
-        return if (fromViewHolder is DraggingSupportable && toViewHolder is DraggingSupportable) {
-            notifyItemMoved(fromViewHolder.bindingAdapterPosition, toViewHolder.bindingAdapterPosition)
-            true
-        } else {
-            false
-        }
+    fun notifyItemDragged(fromViewHolder: RecyclerView.ViewHolder, toViewHolder: RecyclerView.ViewHolder) {
+
+
     }
 }
 

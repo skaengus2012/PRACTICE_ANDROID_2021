@@ -35,6 +35,7 @@ import com.nlab.reminder.core.androix.recyclerview.scrollState
 import com.nlab.reminder.core.androix.recyclerview.scrollY
 import com.nlab.reminder.core.androix.recyclerview.verticalScrollRange
 import com.nlab.reminder.core.component.schedule.ui.view.list.ScheduleAdapterItem
+import com.nlab.reminder.core.component.schedule.ui.view.list.ScheduleContentViewHolder
 import com.nlab.reminder.core.component.schedule.ui.view.list.ScheduleListAdapter
 import com.nlab.reminder.core.component.schedule.ui.view.list.ScheduleListAnimator
 import com.nlab.reminder.core.component.schedule.ui.view.list.ScheduleListItemTouchCallback
@@ -91,10 +92,14 @@ internal class AllFragment : ComposableFragment() {
                     fromViewHolder: RecyclerView.ViewHolder,
                     toViewHolder: RecyclerView.ViewHolder
                 ): Boolean {
-                    return scheduleListAdapter.onItemMoved(
-                        fromViewHolder,
-                        toViewHolder
-                    )
+                    val fromPosition = fromViewHolder.bindingAdapterPosition
+                    val toPosition = toViewHolder.bindingAdapterPosition
+
+                    if (fromViewHolder is ScheduleContentViewHolder) {
+                        fromViewHolder.onDragMoved()
+                    }
+
+                    return true
                 }
 
                 override fun onItemMoveEnded() {

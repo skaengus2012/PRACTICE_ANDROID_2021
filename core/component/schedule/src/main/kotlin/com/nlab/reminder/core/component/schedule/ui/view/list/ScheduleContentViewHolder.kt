@@ -58,7 +58,7 @@ import kotlin.math.absoluteValue
 /**
  * @author Thalys
  */
-internal class ScheduleContentViewHolder(
+class ScheduleContentViewHolder(
     private val binding: LayoutScheduleAdapterItemContentBinding,
     private val selectionEnabled: Flow<Boolean>,
     private val onSimpleEditDone: (SimpleEdit) -> Unit,
@@ -193,6 +193,10 @@ internal class ScheduleContentViewHolder(
         binding.root.alpha = if (isActive) 0.7f else 1f
         binding.viewLine.alpha = if (isActive) 0f else 1f
         binding.editableViews().forEach { v -> v.isEnabled = isActive.not() }
+    }
+
+    override fun onDragMoved() {
+        binding.editableViews().forEach { v -> v.clearFocus() }
     }
 
     fun bind(item: ScheduleAdapterItem.Content) {
