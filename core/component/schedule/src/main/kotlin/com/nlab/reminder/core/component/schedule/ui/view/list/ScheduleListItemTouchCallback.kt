@@ -80,6 +80,7 @@ class ScheduleListItemTouchCallback(
         return if (viewHolder is DraggingSupportable && target is DraggingSupportable
             && viewHolder.itemViewType == target.itemViewType
         ) {
+            // itemView 를 drag 시점에 사용하기 때문에 같은 ViewHolder 여야 애니메이션이 끊기지 않음..
             itemMoveListener.onItemMoved(viewHolder, target)
         } else {
             false
